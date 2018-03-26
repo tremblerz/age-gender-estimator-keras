@@ -111,7 +111,7 @@ def main():
         LearningRateScheduler(schedule=Schedule(nb_epochs)),
         reduce_lr,
         ModelCheckpoint(
-            os.path.join('checkpoints','weights.{epoch:02d}-{val_loss:.2f}.hdf5'),
+            os.path.join('checkpoints', 'weights.{epoch:02d}-{val_loss:.2f}.hdf5'),
             monitor="val_loss",
             verbose=1,
             save_best_only=True,
