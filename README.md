@@ -41,7 +41,7 @@ python3 plot_history.py --input models/history.h5
 ```
 
 ## Network architecture
-![Model](models/model.png)
+![Model](model.png)
 
 ## Results
 Trained on IMDB
