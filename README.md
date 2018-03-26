@@ -40,11 +40,15 @@ usage: train.py [-h] --input INPUT [--batch_size BATCH_SIZE]
 python3 plot_history.py --input models/history.h5 
 ```
 
-## Network architecture
+## Model architecture
 ![Model](model.png)
 
 ## Results
-Trained on IMDB
+After training the model for 70 epochs, the following results were obtained. 
+
+![Accuracy](accuracy.png)
+![Loss](loss.png)
+
 
 ## License
 This project is released under the MIT license.
