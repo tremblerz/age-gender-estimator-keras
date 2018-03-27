@@ -178,7 +178,6 @@ class ImageGenerator(object):
                 if len(targets) == self.batch_size:
                     inputs = np.asarray(inputs)
                     targets = np.asarray(targets)
-                    # this will not work for boxes
 
                     gender = np_utils.to_categorical(targets[:, 0], 2)
                     # Quantizing the age
