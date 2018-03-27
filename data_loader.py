@@ -14,7 +14,7 @@ class DataManager(object):
         elif self.dataset_name == 'imdb':
             self.dataset_path = 'data/imdb_crop/imdb.mat'
         else:
-            raise Exception('Incorrect dataset name, please input imdb or fer2013')
+            raise Exception('Invalid dataset')
 
     def get_data(self):
         if self.dataset_name == 'imdb':
