@@ -38,11 +38,11 @@ class DataManager(object):
         age_classes = np.array([calc_age(photo_taken[i], dob[i]) for i in range(len(dob))])
 
         # 0 <= age_classes <= 100
-        invalid_age_range = np.isin(age_classes, [x for x in range(101)])
+        valid_age_range = np.isin(age_classes, [x for x in range(101)])
 
         mask = np.logical_and(face_score_mask, second_face_score_mask)
         mask = np.logical_and(mask, unknown_gender_mask)
-        mask = np.logical_and(mask, invalid_age_range)
+        mask = np.logical_and(mask, valid_age_range)
 
         image_names_array = image_names_array[mask]
 
