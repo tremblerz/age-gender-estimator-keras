@@ -52,7 +52,7 @@ After training the model for 70 epochs, the following results were obtained.
 
 ## License
 This project is released under the MIT license.
-[the IMDB-WIKI dataset] dataset being used is subject to the following conditions.
+[the IMDB-WIKI dataset] being used is subject to the following conditions.
 
 > Please notice that this dataset is made available for academic research purpose only. All the images are collected from the Internet, and the copyright belongs to the original owners. If any of the images belongs to you and you would like it removed, please kindly inform us, we will remove it from our dataset immediately.
 
