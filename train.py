@@ -11,7 +11,7 @@ from keras.optimizers import SGD
 from config import FINAL_WEIGHTS_PATH, IMG_SIZE
 from data_generator import ImageGenerator
 from data_loader import DataManager, split_imdb_data
-from models.MobileNet import MobileNetEx
+from models.mobile import MobileNetEx
 from utils import mk_dir
 
 logging.basicConfig(level=logging.DEBUG)
