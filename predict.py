@@ -9,7 +9,7 @@ from tqdm import tqdm
 import dlib
 
 from config import IMG_SIZE
-from models.MobileNet import MobileNetEx
+from models.mobile_net import MobileNetDeepEstimator
 from preprocessor import preprocess_input
 
 detector = dlib.get_frontal_face_detector()
@@ -38,7 +38,7 @@ def detect_faces(img):
     return faces
 
 
-model = MobileNetEx(IMG_SIZE, 1, 21, weights=None)()
+model = MobileNetDeepEstimator(IMG_SIZE, 1, 21, weights=None)()
 model.load_weights(os.path.join("checkpoints", "weights.62-1.97.hdf5"))
 
 base_path = "test"

@@ -11,7 +11,7 @@ from keras.optimizers import SGD
 from config import FINAL_WEIGHTS_PATH, IMG_SIZE
 from data_generator import ImageGenerator
 from data_loader import DataManager, split_imdb_data
-from models.mobile import MobileNetEx
+from models.mobile_net import MobileNetDeepEstimator
 from utils import mk_dir
 
 logging.basicConfig(level=logging.DEBUG)
@@ -73,7 +73,7 @@ def main():
 
     n_age_bins = 21
     alpha = 1
-    model = MobileNetEx(input_shape[0], alpha, n_age_bins, weights='imagenet')()
+    model = MobileNetDeepEstimator(input_shape[0], alpha, n_age_bins, weights='imagenet')()
 
     opt = SGD(lr=0.001)
 
