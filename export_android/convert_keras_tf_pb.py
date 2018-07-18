@@ -30,7 +30,7 @@ K.set_learning_phase(0)
 num_neu = 21
 alpha = 1
 input_shape = (224, 224, 3)
-net_model = MobileNetDEX(input_shape[0], alpha, num_neu, weights=None)()
+net_model = MobileNetDeepEstimator(input_shape[0], alpha, num_neu, weights=None)()
 net_model.load_weights(model_file)
 
 pred = [None]*num_output
