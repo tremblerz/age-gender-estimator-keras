@@ -33,7 +33,7 @@ The trained models are stored in the directory `checkpoints` as `weights.{epoch}
 ```sh
 usage: train.py [-h] --input INPUT [--batch_size BATCH_SIZE]
                 [--nb_epochs NB_EPOCHS] [--validation_split VALIDATION_SPLIT]    
-                
+```                           
 ### Plot training curves
 
 ```sh
