@@ -9,7 +9,7 @@ import tensorflow as tf
 from tensorflow.python.framework import graph_util
 from tensorflow.python.framework import graph_io
 
-from models.mobile import MobileNetDEX
+from models.mobile_net import MobileNetDeepEstimator
 
 model_file = '../checkpoints/weights.62-1.97.hdf5'
 print(os.path.exists(model_file))
