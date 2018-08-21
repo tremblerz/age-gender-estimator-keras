@@ -1,5 +1,7 @@
 # Estimating Age and Gender using MobileNets
 
+Read the blog [here](https://medium.com/ymedialabs-innovation/estimating-age-and-gender-with-mobilenets-13eaee1e819c)
+
 ## Prerequisites
 - Python 3.5+
 - Keras 2.0+
