@@ -196,6 +196,6 @@ class ImageGenerator(object):
 
     def _wrap_in_dictionary(self, image_array, gender, age_quantized):
         return [
-            {'input_2': image_array},
+            {'input_1': image_array},
             {'gender': gender, 'age': age_quantized}
         ]

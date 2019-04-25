@@ -16,7 +16,6 @@ from utils import mk_dir
 
 logging.basicConfig(level=logging.DEBUG)
 
-
 class Schedule:
     def __init__(self, nb_epochs):
         self.epochs = nb_epochs
@@ -44,7 +43,6 @@ def get_args():
                         help="validation split ratio")
     args = parser.parse_args()
     return args
-
 
 def main():
     args = get_args()
