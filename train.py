@@ -7,6 +7,7 @@ import string
 import pandas as pd
 from keras.callbacks import LearningRateScheduler, ModelCheckpoint, TensorBoard, ReduceLROnPlateau
 from keras.optimizers import SGD
+import keras.backend as K
 
 from config import FINAL_WEIGHTS_PATH, IMG_SIZE
 from data_generator import ImageGenerator
@@ -28,7 +29,6 @@ class Schedule:
         elif epoch_idx < self.epochs * 0.60:
             return 0.00005
         return 0.00008
-
 
 def get_args():
     parser = argparse.ArgumentParser(description="This script trains the CNN model for age and gender estimation.",
@@ -77,10 +77,12 @@ def main():
 
     model.compile(
         optimizer=opt,
-        loss=["binary_crossentropy",
-              "categorical_crossentropy"],
+        loss={'gender':'binary_crossentropy',
+            'age':'categorical_crossentropy'},
+        loss_weights={'gender':-1.0,
+                    'age':1.0},
         metrics={'gender': 'accuracy',
-                 'age': 'accuracy'},
+                 'age': 'accuracy'}
     )
 
     logging.debug("Model summary...")
@@ -109,7 +111,7 @@ def main():
         LearningRateScheduler(schedule=Schedule(nb_epochs)),
         reduce_lr,
         ModelCheckpoint(
-            os.path.join('checkpoints', 'weights.{epoch:02d}-{val_loss:.2f}.hdf5'),
+            os.path.join('checkpoints', 'weights_loss2.{epoch:02d}-{val_loss:.2f}.hdf5'),
             monitor="val_loss",
             verbose=1,
             save_best_only=True,
@@ -132,7 +134,7 @@ def main():
     logging.debug("Saving weights...")
     model.save(os.path.join("models", "MobileNet_model.h5"))
     model.save_weights(os.path.join("models", FINAL_WEIGHTS_PATH), overwrite=True)
-    pd.DataFrame(hist.history).to_hdf(os.path.join("models", "history.h5"), "history")
+    pd.DataFrame(hist.history).to_hdf(os.path.join("models", "history_loss2.h5"), "history")
 
 
 if __name__ == '__main__':
