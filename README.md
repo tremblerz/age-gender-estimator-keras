@@ -46,7 +46,7 @@ python3 plot_history.py --input models/history.h5
 ![Model](model.png)
 
 ## Results
-After training the model for 70 epochs, the following results were obtained. 
+After training the model for 100 epochs, the following results were obtained. 
 
 ![Accuracy](accuracy.png)
 ![Loss](loss.png)
