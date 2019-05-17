@@ -25,7 +25,7 @@ logging.basicConfig(level=logging.DEBUG)
 def get_adversarial_acc_metric_gender(model, eps=0.3, clip_min=0.0, clip_max=1.0):
     def adv_acc(y, _):
         # Generate adversarial examples
-        x_adv = fgsm(model, y, eps=0.3, clip_min=0.0, clip_max=1.0)
+        x_adv = fgsm(model, y, eps=eps, clip_min=clip_min, clip_max=clip_max)
         # Consider the attack to be constant
         x_adv = K.stop_gradient(x_adv)
         
@@ -38,7 +38,7 @@ def get_adversarial_acc_metric_age(model, eps=0.3, clip_min=0.0, clip_max=1.0):
     def adv_acc(y, _):
         # Generate adversarial examples
         y_gender = tf.get_default_graph().get_tensor_by_name("gender_target:0")
-        x_adv = fgsm(model, y_gender, eps=0.3, clip_min=0.0, clip_max=1.0)
+        x_adv = fgsm(model, y_gender, eps=eps, clip_min=clip_min, clip_max=clip_max)
         # Consider the attack to be constant
         x_adv = K.stop_gradient(x_adv)
         
@@ -52,6 +52,8 @@ def get_args():
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("--input", type=str, required=True,
                         help="path to input database mat file")
+    parser.add_argument("--model_weights", type=str, required=True,
+                        help="path to mdoel weights file")
     parser.add_argument("--eps", type=float, required=True,
                         help="epsilon value for adversarial perturbation")
     parser.add_argument("--batch_size", type=int, default=32,
@@ -69,6 +71,7 @@ def main():
     eps = args.eps
     batch_size = args.batch_size
     validation_split = args.validation_split
+    model_weights = args.model_weights
 
     logging.debug("Loading data...")
 
@@ -84,7 +87,6 @@ def main():
     n_age_bins = 21
     alpha=1
     model = MobileNetDeepEstimator(input_shape[0], alpha, n_age_bins, weights='imagenet')()
-    model.load_weights('models/final_weights_weighted_loss2.hdf5')
 
     image_generator = ImageGenerator(ground_truth_data, batch_size,
                                      input_shape[:2],
@@ -95,8 +97,8 @@ def main():
 
 
     opt = SGD(lr=0.001)
-    adv_acc_metric_gender = get_adversarial_acc_metric_gender(model, eps)
-    adv_acc_metric_age = get_adversarial_acc_metric_age(model, eps)
+    adv_acc_metric_gender = get_adversarial_acc_metric_gender(model, eps=eps)
+    adv_acc_metric_age = get_adversarial_acc_metric_age(model, eps=eps)
 
     model.compile(
         optimizer=opt,
@@ -105,6 +107,7 @@ def main():
         metrics={'gender':adv_acc_metric_gender,
             'age':adv_acc_metric_age}
     )
+    model.load_weights(model_weights)
 
     eval_list = model.evaluate_generator(image_generator.flow(mode='val'),
             steps=int(len(val_keys) / batch_size))
@@ -115,7 +118,7 @@ def main():
     K.clear_session()
 
     model = MobileNetDeepEstimator(input_shape[0], alpha, n_age_bins, weights='imagenet')()
-    model.load_weights('models/final_weights_weighted_loss2.hdf5')
+    model.load_weights(model_weights)
     model.compile(
         optimizer=opt,
         loss={'gender':'binary_crossentropy',
