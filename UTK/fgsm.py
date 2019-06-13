@@ -8,7 +8,7 @@ import cv2
 from preprocessor import _imread as imread
 from preprocessor import _imresize as imresize
 from matplotlib import pyplot as plt
-from keras.losses import mean_squared_error as mse
+from keras.losses import categorical_crossentropy
 import argparse
 import glob
 import os
@@ -56,16 +56,19 @@ def predict(model, image):
 
 def FGSM(x, race_label,model,eps=0.3):
     sess = K.get_session()
-    x_adv = x + (K.random_normal(x.shape) * 0.1)
-    race_output = model.get_layer(name='race_output').output
-    loss = mse(race_label, race_output)
-    grads = K.gradients(loss, model.input)
+    x_adv = x #+ (K.random_normal(x.shape) * 0.1)
+    print(list(map(lambda x: x.name, model.layers)))
+    dense_out = model.get_layer('conv2d_14').output
+    race_output = model.get_layer('race_output').output
+    weights = model.get_layer('race_output').get_weights()
+    
+    loss = categorical_crossentropy(race_label, race_output)  
+    grads = K.gradients(dense_out, model.input)
     delta = K.sign(grads[0])
     x_adv = x_adv + eps * delta
     x_adv = K.clip(x_adv, 0.0 ,1.0)
     loss_np, gradients, x_adv_array = sess.run([loss, grads, x_adv], feed_dict={model.input:x})
-    #print(loss_np)
-    #print(np.sum(gradients[0]))
+    print('GRADIENT SUM:{}'.format(np.sum(gradients[0])))
     return x_adv_array
 
 def plot_adversarial(orig_img, adv_img):
