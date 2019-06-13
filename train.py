@@ -77,7 +77,7 @@ def main():
 
     model.compile(
         optimizer=opt,
-        loss={'gender':'binary_crossentropy',
+        loss={'gender':'categorical_crossentropy',
             'age':'categorical_crossentropy'},
         loss_weights={'gender':-1.0,
                     'age':1.0},
@@ -111,7 +111,7 @@ def main():
         LearningRateScheduler(schedule=Schedule(nb_epochs)),
         reduce_lr,
         ModelCheckpoint(
-            os.path.join('checkpoints', 'weights_loss2.{epoch:02d}-{val_loss:.2f}.hdf5'),
+            os.path.join('checkpoints', 'weights_loss3.{epoch:02d}-{val_loss:.2f}.hdf5'),
             monitor="val_loss",
             verbose=1,
             save_best_only=True,
@@ -132,9 +132,9 @@ def main():
     )
 
     logging.debug("Saving weights...")
-    model.save(os.path.join("models", "MobileNet_model.h5"))
+    model.save(os.path.join("models", "MobileNet_model_test1.h5"))
     model.save_weights(os.path.join("models", FINAL_WEIGHTS_PATH), overwrite=True)
-    pd.DataFrame(hist.history).to_hdf(os.path.join("models", "history_loss2.h5"), "history")
+    pd.DataFrame(hist.history).to_hdf(os.path.join("models", "history_loss_test.h5"), "history")
 
 
 if __name__ == '__main__':

@@ -25,7 +25,7 @@ def main():
     plt.xlabel("number of epochs")
     plt.ylabel("loss")
     plt.legend()
-    plt.savefig(os.path.join(input_dir, "loss.png"))
+    plt.savefig(os.path.join(input_dir, "loss2.png"))
     plt.cla()
 
     plt.plot(df["gender_acc"], label="accuracy (gender)")
@@ -35,7 +35,7 @@ def main():
     plt.xlabel("number of epochs")
     plt.ylabel("accuracy")
     plt.legend()
-    plt.savefig(os.path.join(input_dir, "accuracy.png"))
+    plt.savefig(os.path.join(input_dir, "accuracy2.png"))
 
 
 if __name__ == '__main__':
