@@ -4,7 +4,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
-/age-gender-race-prediction/__pycache__/
+/UTK/__pycache__/
 
 # C extensions
 *.so
@@ -106,7 +106,7 @@ ENV/
 /checkpoints/
 .DS_Store
 
-/age-gender-race-prediction/models
-/age-gender-race-prediction/data/
-/age-gender-race-prediction/README.md
+/UTK/models
+/UTK/data/
+/UTK/README.md
 
