@@ -53,7 +53,7 @@ def get_args():
     parser.add_argument("--input", type=str, required=True,
                         help="path to input database mat file")
     parser.add_argument("--model_weights", type=str, required=True,
-                        help="path to mdoel weights file")
+                        help="path to model weights file")
     parser.add_argument("--eps", type=float, required=True,
                         help="epsilon value for adversarial perturbation")
     parser.add_argument("--batch_size", type=int, default=32,

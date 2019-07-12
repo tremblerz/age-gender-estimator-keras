@@ -21,14 +21,14 @@ GENDER_ID_MAP = dict((g, i) for i, g in ID_GENDER_MAP.items())
 ID_RACE_MAP = {0: 'white', 1: 'black', 2: 'asian', 3: 'indian', 4: 'others'}
 RACE_ID_MAP = dict((r, i) for i, r in ID_RACE_MAP.items())
 
-ID_GENDER_MAP, GENDER_ID_MAP, ID_RACE_MAP, RACE_ID_MAP
+#ID_GENDER_MAP, GENDER_ID_MAP, ID_RACE_MAP, RACE_ID_MAP
 
 def parse_filepath(filepath):
     try:
         path, filename = os.path.split(filepath)
         filename, ext = os.path.splitext(filename)
         age, gender, race, _ = filename.split("_")
-        return int(age), int(gender), int(race)
+        return int(age), ID_GENDER_MAP[int(gender)], ID_RACE_MAP[int(race)]
     except Exception as e:
         print(filepath)
         return None, None, None
