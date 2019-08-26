@@ -18,9 +18,25 @@ from keras.utils import to_categorical
 from PIL import Image
 import glob 
 
-from fgsm import parse_filepath, DATA_DIR, IM_WIDTH, IM_HEIGHT, ID_GENDER_MAP, GENDER_ID_MAP, RACE_ID_MAP, ID_RACE_MAP  
+DATA_DIR = "data/UTKFace"
+TRAIN_TEST_SPLIT = 0.7
+IM_WIDTH = IM_HEIGHT = 198
+ID_GENDER_MAP = {0: 'male', 1: 'female'}
+GENDER_ID_MAP = dict((g, i) for i, g in ID_GENDER_MAP.items())
+ID_RACE_MAP = {0: 'white', 1: 'black', 2: 'asian', 3: 'indian', 4: 'others'}
+RACE_ID_MAP = dict((r, i) for i, r in ID_RACE_MAP.items())
 
 logging.basicConfig(level=logging.DEBUG)
+
+def parse_filepath(filepath):
+    try:
+        path, filename = os.path.split(filepath)
+        filename, ext = os.path.splitext(filename)
+        age, gender, race, _ = filename.split("_")
+        return int(age), ID_GENDER_MAP[int(gender)], ID_RACE_MAP[int(race)]
+    except Exception as e:
+        print(filepath)
+        return None, None, None
 
 def get_adversarial_acc_metric_race(model, eps=0.3, clip_min=0.0, clip_max=1.0):
     def adv_acc(y, _):

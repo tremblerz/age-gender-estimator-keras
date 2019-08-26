@@ -28,7 +28,7 @@ def parse_filepath(filepath):
         path, filename = os.path.split(filepath)
         filename, ext = os.path.splitext(filename)
         age, gender, race, _ = filename.split("_")
-        return int(age), ID_GENDER_MAP[int(gender)], ID_RACE_MAP[int(race)]
+        return int(age), int(gender), int(race)
     except Exception as e:
         print(filepath)
         return None, None, None
